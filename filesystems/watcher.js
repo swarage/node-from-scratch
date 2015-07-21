@@ -1,9 +1,13 @@
 const 
   fs = require('fs');
+  filename = process.argv[2];
 
+if (!filename) {
+  throw Error('you must pass a filename as an argument!');
+}
 
-fs.watchFile('testfile.txt', function() {
-  console.log('the file was changed!');
+fs.watchFile(filename, function() {
+  console.log(filename + ' was changed!');
 });
 
-console.log('now watching testfile.txt for changes...');
+console.log('now watching ' + filename + ' for changes...');
