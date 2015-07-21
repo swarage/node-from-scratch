@@ -1,5 +1,7 @@
+"use strict";
 const 
-  fs = require('fs');
+  fs = require('fs'),
+  spawn = require('child_process').spawn, 
   filename = process.argv[2];
 
 if (!filename) {
@@ -7,7 +9,8 @@ if (!filename) {
 }
 
 fs.watchFile(filename, function() {
-  console.log(filename + ' was changed!');
+  let ls = spawn('ls', ['-lh', filename]);
+  ls.stdout.pipe(process.stdout);
 });
 
 console.log('now watching ' + filename + ' for changes...');
