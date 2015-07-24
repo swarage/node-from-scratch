@@ -1,10 +1,11 @@
 "use strict";
 const
   net = require('net'),
-  client = net.connect({port: 5432});
+  ldj = require('./ldj.js'),
+  netClient = net.connect({port: 5432}),
+  ldjClient = ldj.connect(netClient);
 
-client.on('data', function(data) {
-  let message = JSON.parse(data);
+ldjClient.on('message', function(message) {
   if (message.type === 'watch') {
     console.log('Now watching ' + message.file);
   } else if (message.type === 'changed') {
